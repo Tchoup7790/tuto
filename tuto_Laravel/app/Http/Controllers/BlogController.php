@@ -11,20 +11,26 @@ use Illuminate\View\View;
 
 class BlogController extends Controller
 {
-    public function index(BlogFilterRequest $request) : View
+    public function index() : View
     {
-        $posts = \App\Models\Post::paginate(1);
+//        $post = new Post();
+//        $post->title = "Article Empty";
+//        $post->content = "article empty";
+//        $post->slug = "article-empty";
+//        $post->save();
+
+
         return view('blog.index', [
-            'posts' => $posts
+            'posts' => Post::paginate(3)
         ]);
     }
 
-    public function show(string $slug, string $id) : RedirectResponse | Post
-    {
-        $posts =  \App\Models\Post::findorFail($id);
-        if ($posts->slug != $slug){
-            return to_route('blog.show', ["slug" => $posts->slug, 'id' => $id]);
+    public function show(String $slug,Post $post) : RedirectResponse | View {
+        if ($post->slug != $slug){
+            return to_route('blog.show', ["slug" => $post->slug, "post" => $post->id]);
         }
-        return $posts;
+        return view('blog.show', [
+            'post' => $post
+        ]);
     }
 }
