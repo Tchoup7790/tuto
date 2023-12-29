@@ -23,6 +23,21 @@ Route::prefix('/blog')->name('blog.')->controller(BlogController::class)->group(
 {
     Route::get('/', "index")->name('index');
 
+    Route::prefix('/new')->group(function () {
+        Route::get('', "create")->name('create');
+        Route::post('', "store");
+    });
+
+    Route::prefix('/{slug}-{post}/edit')
+        ->where([
+        'post'=>'[0-9]+',
+        'slug' => '[a-z0-9\-]+'
+        ])
+        ->group( function (){
+        Route::get('', 'edit')->name('edit');
+        Route::patch('', 'update');
+    });
+
     Route::get('/{slug}-{post}','show')->where([
         'post' => '[0-9]+',
         'slug' => '[a-z0-9\-]+'
