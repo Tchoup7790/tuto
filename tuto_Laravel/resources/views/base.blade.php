@@ -31,6 +31,23 @@
                     <a href="/" class="nav-link">Link</a>
                 </li>
             </ul>
+            <div class="navbar-nav ms-auto mb-2 mb-lg-0">
+                @auth
+                    <div class="nav-item hstack">
+                        {{Auth::user()->name}}
+                        <form class="nav-item" method="post" action="{{route('auth.logout')}}">
+                            @method('delete')
+                            @csrf
+                            <button class="nav-link">Se déconnecter</button>
+                        </form>
+                    </div>
+                @endauth
+                @guest
+                    <div class="nav-item">
+                        <a href="{{route('auth.login')}}" class="nav-link">Se connecter</a>
+                    </div>
+                @endguest
+            </div>
         </div>
     </div>
 </nav>

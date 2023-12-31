@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BlogFilterRequest;
 use App\Http\Requests\FormPostRequest;
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -17,14 +22,8 @@ class BlogController extends Controller
 {
     public function index() : View
     {
-//        $post = new Post();
-//        $post->title = "Article Empty";
-//        $post->content = "article empty";
-//        $post->slug = "article-empty";
-//        $post->save();
-        
         return view('blog.index', [
-            'posts' => Post::paginate(3)
+            'posts' => Post::with('tags', 'category')->paginate(10)
         ]);
     }
 
@@ -33,14 +32,17 @@ class BlogController extends Controller
 
         $post->title = "Article";
         $post->content = "Super Article de bonne qualité";
-        
+
         return view('blog.create', [
-            'post'=>$post
+            'post'=>$post,
+            'categories'=>Category::select('id', 'name')->get(),
+            'tags'=> Tag::select('id', 'name')->get()
         ]);
     }
 
     public function store(FormPostRequest $request) : RedirectResponse | Redirector {
         $post = Post::create($request->validated());
+        $post->tags()->sync($request->validated('tags'));
         return redirect()
             ->route('blog.show', ['slug' => $post->slug, 'post'=>$post->id])
             ->with('success', "Article Sauvegardé");
@@ -48,12 +50,15 @@ class BlogController extends Controller
 
     public function edit(String $slug,Post $post) : View{
         return view('blog.edit', [
-            'post'=>$post
+            'post'=>$post,
+            'categories'=>Category::select('id', 'name')->get(),
+            'tags'=> Tag::select('id', 'name')->get()
         ]);
     }
 
-    public function update(String $slug,Post $post, FormPostRequest $request) : RedirectResponse | Redirector {
+    public function update(String $slug,Post $post,FormPostRequest $request) : RedirectResponse | Redirector {
         $post->update($request->validated());
+        $post->tags()->sync($request->validated('tags'));
         return redirect()
             ->route('blog.show', ['slug' => $post->slug, 'post'=>$post->id])
             ->with('success', "Article Modifié");

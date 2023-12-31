@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 
-class BlogFilterRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +12,6 @@ class BlogFilterRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-
     }
 
     /**
@@ -24,15 +22,8 @@ class BlogFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'min:4'],
-            'slug' => ['required', 'regex:/^[a-z0-9\-]*$/']
+            'email'=>'required|email',
+            'password'=>'required|min:4'
         ];
-    }
-
-    public function prepareForValidation()
-    {
-        $this->merge([
-            'slug' => $this->input('slug') ?: Str::slug($this->input('title'))
-        ]);
     }
 }
