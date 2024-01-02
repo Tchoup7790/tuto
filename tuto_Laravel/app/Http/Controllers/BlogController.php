@@ -10,9 +10,11 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -41,7 +43,7 @@ class BlogController extends Controller
     }
 
     public function store(FormPostRequest $request) : RedirectResponse | Redirector {
-        $post = Post::create($request->validated());
+        $post = Post::create($this->extractData(new Post(), $request));
         $post->tags()->sync($request->validated('tags'));
         return redirect()
             ->route('blog.show', ['slug' => $post->slug, 'post'=>$post->id])
@@ -57,11 +59,26 @@ class BlogController extends Controller
     }
 
     public function update(String $slug,Post $post,FormPostRequest $request) : RedirectResponse | Redirector {
-        $post->update($request->validated());
+        $post->update($this->extractData($post, $request));
         $post->tags()->sync($request->validated('tags'));
         return redirect()
             ->route('blog.show', ['slug' => $post->slug, 'post'=>$post->id])
             ->with('success', "Article Modifié");
+    }
+
+    private function extractData(Post $post, FormPostRequest $request) : array
+    {
+        $data = $request->validated();
+        /* @var UploadedFile|null $image */
+        $image = $request->validated('image');
+        if ($image == null && !$image->getError()){
+            return $data;
+        }
+        if ($post->image){
+            Storage::disk('public')->delete($post->image);
+        }
+        $data['image'] = $image->store('blog', 'public');
+        return $data;
     }
 
     public function show(String $slug,Post $post) : RedirectResponse | View {
