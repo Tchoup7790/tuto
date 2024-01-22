@@ -7,27 +7,49 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script>
-        // boucles
-        let i = 0
-        while (i < 10) {
-            console.log('bonjour')
-            i = i + 1
+        // functions
+        function saluer (nom) {
+            return "Salut " + nom
+        }
+        saluer('Marc')
+
+        const demo = function (nom = 'John') {
+            return "Salut " + nom
+        }
+        demo()
+
+        function maFonction () {
+            console.log(this)
         }
 
-        for (let j = 0; j < 10; j++){
-            console.log('Bonjour')
-        }
+        maFonction.call(3)
+        maFonction.call(4)
 
-        const array = [12, 32 ,34, 34]
-        for (let k = 0; k < array.length; k++){
-            console.log(array[k])
+        const a = {
+            prop: 42,
+            func: function() {
+                return this.prop;
+            },
+        };
+
+        console.log(a.func())
+
+        // const hello = (name) => {
+        //     console.log(`Bonjour ${name}`)
+        // }
+
+        const hello = () => {
+            console.log(this)
         }
-        for (let k in array){
-            console.log(array[k])
-        }
-        for (let elt of array){
-            console.log(elt)
-        }
+        hello()
+        hello.call(3)
+
+        // const double = (n) => {
+        //     return 2 * n
+        // }
+        // const double = (n) => 2 * n
+        const double = n => 2 * n
+
 
     </script>
 </head>
