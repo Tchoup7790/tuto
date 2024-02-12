@@ -1,26 +1,39 @@
-import { useState } from "react"
+import '../public/style.css'
+import { useEffect, useState } from "react"
 
-function App() {
-  const [firstname, setFirstname] = useState('John Doe')
+function App(){
+  const [showInput, setShowInput] = useState(true)
 
-  const handleChange = (e : Event) => {
-    setFirstname(e.target.value)
-  }
+  return <div className="container my-3 stack">
+    <input type="checkbox" checked={showInput} onChange={setShowInput} id="titleshow" label="Afficher le champs titre" />
+    {showInput && <EditTitle/>}
+    <div style={{height: '300vh'}}></div>
+  </div>
+}
 
-  const reset = () => {
-    setFirstname('')
-  }
+function EditTitle() {
+  const [title, setTitle] = useState('')
+  const [firstname, setFirstname] = useState('')
 
-  const [checked, setChecked] = useState(true)
-  const toggleCheck = () => {
-    setChecked(!checked)
-  }
+  useEffect(() => {
+    document.title = title
+  }, [title])
 
-  return <form>
-    <input type="text" name="firstname" value={firstname} onChange={handleChange} />
-    <input type="checkbox" checked={checked} onChange={toggleCheck} />
-    <button onClick={reset} disabled={!checked} type="button">Reset</button>
-  </form>
+  return <div>
+    <input 
+    type="text"
+      placeholder="Modifier le titre"
+      value={title}
+      onChange={setTitle}
+    />
+
+    <input
+    type="text"
+      placeholder="Prénom"
+      value={firstname}
+      onChange={setFirstname}
+    />
+  </div>
 }
 
 export default App
