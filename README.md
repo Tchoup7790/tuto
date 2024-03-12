@@ -1,4 +1,4 @@
-# Tutorials  
+# Tutorials
 
 This project brings together various creations from tutorials covering different frameworks and programming languages.
 Each folder represents a distinct achievement, complete with the necessary files and dependencies.
