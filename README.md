@@ -16,7 +16,7 @@ Explore these creations to learn and practice various development concepts.
    ```bash
    git clone https://github.com/Tchoup7790/tuto.git
    ```
-  
+ 
 ## Usage
 
 Choose the folder corresponding to the tutorial you are interested in and follow the installation instructions specific to each project.
