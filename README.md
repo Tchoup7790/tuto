@@ -16,7 +16,6 @@ Explore these creations to learn and practice various development concepts.
    ```bash
    git clone https://github.com/Tchoup7790/tuto.git
    ```
-
   
 ## Usage
 
