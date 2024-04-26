@@ -1,0 +1,9 @@
+<ul>
+    <% @variable.each do |element| %>
+    <li>
+        <% element.each do |headers, elt| %>
+            <p><%= elt %></p>
+        <% end %>
+    </li>
+    <% end %>
+</ul>
