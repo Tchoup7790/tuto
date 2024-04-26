@@ -24,14 +24,15 @@ const john : User = {firstname: "John", lastname: "Doe"}
 console.log(john)
 
 class A{
+    private a: string
     public b = 4
     protected c = 5
     
     constructor(aParam : string){
-        const a :string = aParam
+        this.a = aParam
     }
 
-    log(){
+    log() {
         console.log(this.a)
         console.log(this.b)
         console.log(this.c)
