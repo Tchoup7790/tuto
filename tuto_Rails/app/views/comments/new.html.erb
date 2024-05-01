@@ -1,0 +1,4 @@
+<%= turbo_frame_tag "new_comment_frame" do %>
+  <h2 class="text-1xl font-semibold">Comment</h2>
+  <%= render 'comments/form', article: @article, comment:@comment%>
+<% end %>

@@ -1,0 +1,13 @@
+<% unless comment.archived? %>
+  <%= turbo_frame_tag "comment_#{comment.id}", class:"flex h-full w-full flex-col justify-around border-solid border-2 border-grey rounded-lg p-5 gap-5" do %>
+      <p class="font-bold">
+        <%= comment.commenter %>
+      </p>
+
+      <p class="font-light text-justify">
+        <%= comment.body %>
+      </p>
+
+    <%= link_to "edit", edit_article_comment_path(comment.article, comment.id), class:"w-full text-center rounded-md bg-blue-600 px-3 py-2 text-xs text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 cursor-pointer" %>
+  <% end %>
+<% end %>

@@ -1,0 +1,18 @@
+<div class="w-3/4 py-5">
+  <%= link_to "Go home", root_path, class:"py-8 text-sm mt-10 w-full text-center font-semibold leading-6 text-gray-900 hover:underline decoration-blue-500 cursor-pointer" %>
+  <h1 class="py-7 text-5xl underline decoration-blue-500 font-extrabold"><%= @article.title %></h1>
+  <%= link_to @category.name, @category, class:"font-semibold px-6 py-2 bg-blue-500 text-white rounded-md w-fit cursor-pointer" %>
+  <p class="text-justify text-xl py-10 px-4 leading-10"><%= @article.body %></p>
+</div>
+    <div data-controller="comments" class="w-3/4 flex flex-col items-start">
+      <button data-action="click->comments#show" class="w-full text-start text-sm font-semibold text-blue-500 cursor-pointer">toggle comments</button>
+      <div data-comments-target="comment" class="hidden w-full flex-col gap-3">
+          <h2 class="text-2xl mt-10 font-semibold">Comments</h2>
+          <%= turbo_frame_tag "comments_frame",class:"grid grid-cols-4 grid-rows-1 w-full gap-5" do %>
+              <%= render @article.comments %>
+          <% end %>
+          <%= turbo_frame_tag "new_comment_frame", class:"flex w-full py-5 items-center flex-col" do %>
+              <%= link_to "Comment", new_article_comment_path(@article),  class:"rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 cursor-pointer"%>
+          <% end %>
+      </div>
+    </div>

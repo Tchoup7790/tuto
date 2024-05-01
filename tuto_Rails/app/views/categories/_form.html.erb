@@ -1,0 +1,13 @@
+<%= form_with model: @category, class:"mt-10 gap-4 h-fit flex flex-col" do |form| %>
+<h4 class="text-1xl font-semibold" >Add a Category:</h4>
+  <div class="h-fit">
+    <%= form.label :name, class:"box-border text-sm font-medium leading-6 text-gray" %><br>
+    <%= form.text_field :name, class: "w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6", placeholder: "Category name" %>
+    <% form.object.errors.full_messages_for(:name).each do |message| %>
+      <div class="h-fit"><%= message %></div>
+    <% end %>
+  </div>
+  <div class="h-fit">
+    <%= form.submit "Create", class:"w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 cursor-pointer" %>
+  </div>
+<% end %>

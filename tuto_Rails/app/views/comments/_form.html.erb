@@ -1,0 +1,18 @@
+<%= form_with model: [ article, comment ], class:"gap-10 w-5/6 h-fit flex flex-col", id: "turbo-form" do |form| %>
+  <p class="h-fit">
+    <%= form.label :commenter, class:"box-border text-sm font-medium leading-6 text-gray" %><br>
+    <%= form.text_field :commenter, class: "w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6", placeholder: "Name" %>
+  </p>
+  <p class="h-fit">
+    <%= form.label :body, class:"box-border text-sm font-medium leading-6 text-gray" %><br>
+    <%= form.text_area :body,class:"w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 min-h-4" %>
+  </p>
+  <p class="h-fit">
+    <%= form.label :status, class:"box-border text-sm font-medium leading-6 text-gray" %><br>
+    <%= form.select :status, Visible::STATUSES,{}, {class:"w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"}%>
+  </p>
+  <p class="h-fit gap-3 flex w-full">
+    <%= link_to "cancel", article , class:"w-full text-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 cursor-pointer" %>
+    <%= form.submit "submit",data: { turbo_frame: "comments_frame" }, class:"w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 cursor-pointer" %>
+  </p>
+<% end %>
